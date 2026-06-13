@@ -1,5 +1,5 @@
 @tool
-extends Node 
+class_name AceLog extends Node 
 
 
 enum LOG_LEVEL {ERROR,INFO,WARN,DEBUG,NONE}
@@ -25,7 +25,7 @@ const EMPTY_ARRAY: Array[String] = []
 
 # "hint_string": "%s/%s:%s" % [TYPE_ARRAY, PROPERTY_HINT_RESOURCE_TYPE, "DirectoryPathResource"]
 
-var  SETTINGS_CONFIGURATION : Dictionary[String, AceSettingConfig] = {
+static var SETTINGS_CONFIGURATION : Dictionary[String, AceSettingConfig] = {
 	SELECTED_LOG_LEVEL: AceSettingConfig.new(SELECTED_LOG_LEVEL, TYPE_STRING, "INFO", PROPERTY_HINT_ENUM, "ERROR,INFO,WARN,DEBUG"),
 	FOLDER_DEBUG_LOG_LEVEL: AceSettingConfig.new(SELECTED_LOG_LEVEL, TYPE_ARRAY, EMPTY_ARRAY, PROPERTY_HINT_TYPE_STRING, "%s/%s:" % [TYPE_STRING, PROPERTY_HINT_DIR]),
 	FOLDER_INFO_LOG_LEVEL: AceSettingConfig.new(SELECTED_LOG_LEVEL, TYPE_ARRAY, EMPTY_ARRAY, PROPERTY_HINT_TYPE_STRING, "%s/%s:" % [TYPE_STRING, PROPERTY_HINT_DIR]),
@@ -37,21 +37,21 @@ var  SETTINGS_CONFIGURATION : Dictionary[String, AceSettingConfig] = {
 	FILE_ERROR_LOG_LEVEL: AceSettingConfig.new(SELECTED_LOG_LEVEL, TYPE_ARRAY, EMPTY_ARRAY, PROPERTY_HINT_TYPE_STRING, "%s/%s:%s" % [TYPE_STRING, PROPERTY_HINT_FILE, "*.gd"])
 }
 
-var _log: Log
+static var _log: Log
 
-var settings: AceSettings
+static var settings: AceSettings
 
-var selected_log_level: LOG_LEVEL = LOG_LEVEL.INFO
-var debug_folders: Array[String] = []
-var info_folders: Array[String] = []
-var warn_folders: Array[String] = []
-var error_folders: Array[String] = []
-var debug_files: Array[String] = []
-var info_files: Array[String] = []
-var warn_files: Array[String] = []
-var error_files: Array[String] = []
+static var selected_log_level: LOG_LEVEL = LOG_LEVEL.INFO
+static var debug_folders: Array[String] = []
+static var info_folders: Array[String] = []
+static var warn_folders: Array[String] = []
+static var error_folders: Array[String] = []
+static var debug_files: Array[String] = []
+static var info_files: Array[String] = []
+static var warn_files: Array[String] = []
+static var error_files: Array[String] = []
 
-var _LOG_LEVEL_DICT: Dictionary[String, AceLogLevelInfo] = {
+static var _LOG_LEVEL_DICT: Dictionary[String, AceLogLevelInfo] = {
 	LOG_LEVEL_NAMES[LOG_LEVEL.ERROR]: AceLogLevelInfo.new(),
 	LOG_LEVEL_NAMES[LOG_LEVEL.INFO]: AceLogLevelInfo.new(),
 	LOG_LEVEL_NAMES[LOG_LEVEL.WARN]: AceLogLevelInfo.new(),
@@ -72,7 +72,7 @@ func _process(delta: float) -> void:
 		_process_settings(settings)
 
 
-func printLog(stmnt: Array, input_log_level: LOG_LEVEL = LOG_LEVEL.NONE):
+static func printLog(stmnt: Array, input_log_level: LOG_LEVEL = LOG_LEVEL.NONE):
 	var call_stack: Array = get_stack()
 	# The first element of the stack array (index 0) represents the current function's information.
 	# The second element (index 1) typically represents the function that called the current one.
@@ -148,7 +148,7 @@ func _process_settings(settings: AceSettings):
 
 
 
-func _get_script_log_level(script: String) -> LOG_LEVEL:
+static func _get_script_log_level(script: String) -> LOG_LEVEL:
 
 	var script_name: String = script.get_file()
 

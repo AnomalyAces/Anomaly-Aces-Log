@@ -3,12 +3,10 @@ extends EditorPlugin
 
 
 func _enable_plugin() -> void:
-	add_autoload_singleton("AceLog", "res://addons/anomalyAcesLog/scripts/AceLog.gd")
 	pass
 
 
 func _disable_plugin() -> void:
-	remove_autoload_singleton("AceLog")
 	pass
 
 

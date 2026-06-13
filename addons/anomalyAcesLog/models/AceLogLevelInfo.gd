@@ -1,3 +1,4 @@
+@tool
 class_name AceLogLevelInfo extends Object
 
 var folder_arr: Array[String] = []
