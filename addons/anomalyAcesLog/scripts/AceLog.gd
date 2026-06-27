@@ -65,7 +65,8 @@ func _ready() -> void:
 	# 	call_deferred("_initalize_settings")
 	# else:
 	# 	printLog(["AceLog is only intended to be used within the editor. Not inititalizing settings"], LOG_LEVEL.INFO)
-	call_deferred("_initalize_settings")
+	call_deferred("initialize_settings")
+	printLog(["AceLog starting to initialize settings"], LOG_LEVEL.INFO)
 
 func _process(delta: float) -> void:
 	if settings != null:
@@ -88,16 +89,17 @@ static func printLog(stmnt: Array, input_log_level: LOG_LEVEL = LOG_LEVEL.NONE):
 
 
 
-func _initalize_settings() -> void:
-	if settings == null:
-		settings = AceSettings.new()
-		settings.initialize_settings(SETTINGS_CONFIGURATION, SETTINGS_ROOT)
-		_process_settings(settings)
-		settings.prepare()
-		printLog(["Intial Settings:", _LOG_LEVEL_DICT])
+static func initialize_settings() -> void:
+
+	settings = AceSettings.new()
+	settings.initialize_settings(SETTINGS_CONFIGURATION, SETTINGS_ROOT)
+	_process_settings(settings)
+	settings.prepare()
+	printLog(["Initial Global Settings:", LOG_LEVEL_NAMES[selected_log_level]])
+	printLog(["Initial File and Folder Settings:", _LOG_LEVEL_DICT])
 		
 
-func _process_settings(settings: AceSettings):
+static func _process_settings(settings: AceSettings):
 	#Default Log Level
 	if selected_log_level != LOG_LEVEL[settings.get_setting(SELECTED_LOG_LEVEL, "INFO")]:
 		selected_log_level = LOG_LEVEL[settings.get_setting(SELECTED_LOG_LEVEL, "INFO")]
